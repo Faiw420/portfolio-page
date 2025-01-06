@@ -190,14 +190,19 @@ export const getPageSeo = cache(async (slug, preview = isDevelopment) => {
         }
       }`,
       preview
-    )
+    );
 
-    return entry?.data?.pageCollection?.items?.[0] ?? null
+    if (!entry || !entry.data?.pageCollection?.items?.length) {
+      console.warn(`No SEO data found for slug: ${slug}`);
+      return {};
+    }
+
+    return entry.data.pageCollection.items[0];
   } catch (error) {
-    console.info(error)
-    return null
+    console.error(`Error fetching SEO data for slug: ${slug}`, error);
+    return {}; // Return empty object on error
   }
-})
+});
 
 export const getAllPageSlugs = cache(async (preview = isDevelopment) => {
   try {

@@ -102,7 +102,7 @@ const nextConfig = {
     ]
   },
   experimental: {
-    optimizePackageImports: ['framer-motion', '@supabase/supabase-js', 'react-tweet'],
+    optimizePackageImports: ['framer-motion', 'react-tweet'],
     webVitalsAttribution: ['FCP', 'LCP', 'CLS', 'FID', 'TTFB', 'INP']
   }
 }

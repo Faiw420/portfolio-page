@@ -1,11 +1,9 @@
 import { Suspense } from 'react'
-import Link from 'next/link'
 
 import { ScrollArea } from '@/components/scroll-area'
 import { ScreenLoadingSpinner } from '@/components/screen-loading-spinner'
 import { FloatingHeader } from '@/components/floating-header'
 import { PageTitle } from '@/components/page-title'
-import { Button } from '@/components/ui/button.jsx'
 
 
 export default async function Home() {
@@ -22,7 +20,7 @@ export default async function Home() {
           <img 
             src="../../assets/me.jpeg" 
             alt="A photo of Tim Darmstädter" 
-            className="my-4 rounded-lg shadow-lg max-w-xs" 
+            className="my-4 max-w-xs rounded-lg shadow-lg"
           />
           <p>
             I'm a data analyst at <a href="https://www.essity.com" target="_blank" rel="noopener noreferrer"><strong>essity</strong></a>. Previously, I worked as a Controller at <a href="https://www.ewr-netz.de" target="_blank" rel="noopener noreferrer"><strong>EWR Netz GmbH</strong>.</a>

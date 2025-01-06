@@ -41,7 +41,6 @@ Create a `.env` file similar to [`.env.example`](https://github.com/suyalcinkaya
 - [shadcn/ui](https://ui.shadcn.com)
 - [Contentful](https://www.contentful.com)
 - [Raindrop](https://raindrop.io)
-- [Supabase](https://supabase.com)
 - [Vercel](https://vercel.com)
 
 ## Repo Activity

@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 
 const calculateAge = (birthDate) => {
   const now = new Date();
@@ -24,7 +24,7 @@ const calculateAge = (birthDate) => {
 
 const AgeCounter = () => {
   // Replace this date with your birthdate
-  const birthDate = new Date('1998-09-21'); // Example birthdate: January 1, 1990
+  const birthDate = useMemo(() => new Date('1998-09-21'), []); // Example birthdate: January 1, 1990
   const [age, setAge] = useState(calculateAge(birthDate));
 
   useEffect(() => {

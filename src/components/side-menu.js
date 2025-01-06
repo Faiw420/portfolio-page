@@ -1,19 +1,7 @@
 'use client'
 
-import dynamic from 'next/dynamic'
 import { useRouter, usePathname } from 'next/navigation'
-import { RadioIcon } from 'lucide-react'
-
 import { ScrollArea } from '@/components/scroll-area'
-import { Button } from '@/components/ui/button.jsx'
-import { LoadingSpinner } from '@/components/loading-spinner'
-const SubmitBookmarkDialog = dynamic(
-  () => import('@/components/submit-bookmark/dialog').then((mod) => mod.SubmitBookmarkDialog),
-  {
-    loading: () => <LoadingSpinner />,
-    ssr: false
-  }
-)
 import { useKeyPress } from '@/hooks/useKeyPress'
 import { cn } from '@/lib/utils'
 
@@ -23,7 +11,7 @@ const keyCodePathnameMapping = {
   Digit3: '/techstack',
 }
 
-export const SideMenu = ({ children, title, bookmarks = [], isInner }) => {
+export const SideMenu = ({ children, title = [], isInner }) => {
   const router = useRouter()
   const pathname = usePathname()
   useKeyPress(onKeyPress, Object.keys(keyCodePathnameMapping))
