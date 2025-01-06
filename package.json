@@ -12,7 +12,8 @@
     "prettier": "prettier --write \"**/*.{html,js,jsx,json,md,mdx,mjs}\"",
     "clear-cache": "rm -rf .next",
     "unused": "next-unused",
-    "lint": "eslint . --ext .js,.jsx"
+    "lint": "eslint . --ext .js,.jsx",
+    "vercel-build": "npm run prepare &&next build"
   },
   "engines": {
     "node": "18.x"
