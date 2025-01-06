@@ -5,7 +5,7 @@ import { getPageSeo } from '@/lib/contentful'
 import { getRegularFont, getBoldFont } from '@/lib/fonts'
 import { sharedMetadata } from '@/app/shared-metadata'
 
-export const alt = 'Workspace'
+export const alt = 'Journey'
 export const size = {
   width: sharedMetadata.ogImage.width,
   height: sharedMetadata.ogImage.height
@@ -14,7 +14,7 @@ export const contentType = sharedMetadata.ogImage.type
 
 export default async function Image() {
   const [seoData = {}, regularFontData, boldFontData] = await Promise.all([
-    getPageSeo('workspace'),
+    getPageSeo('journey'),
     getRegularFont(),
     getBoldFont()
   ])
@@ -28,8 +28,8 @@ export default async function Image() {
         icon={
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="84"
-            height="84"
+            width="64"
+            height="64"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -37,13 +37,10 @@ export default async function Image() {
             strokeLinecap="round"
             strokeLinejoin="round"
           >
-            <path d="M19 9V6a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v3" />
-            <path d="M3 16a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5a2 2 0 0 0-4 0v2H7v-2a2 2 0 0 0-4 0Z" />
-            <path d="M5 18v2" />
-            <path d="M19 18v2" />
+            <polygon points="3 11 22 2 13 21 11 13 3 11" />
           </svg>
         }
-        url="workspace"
+        url="journey"
       />
     ),
     {

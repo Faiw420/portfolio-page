@@ -1,25 +1,28 @@
 import { ScrollArea } from '@/components/scroll-area'
-import { JourneyCard } from '@/components/journey-card'
 import { FloatingHeader } from '@/components/floating-header'
 import { PageTitle } from '@/components/page-title'
 import { GradientBg3 } from '@/components/gradient-bg'
-import { PlusIcon } from 'lucide-react'
-import { cvhistory } from '../../components/cv_local'
+import { JourneyCard } from '@/components/journey-card'
+import { Database, Code2 } from 'lucide-react'
+import { stacks } from '../../components/stack_local'
 
-export default async function CV() {
+export default async function Home() {
   return (
     <ScrollArea useScrollAreaId>
       <GradientBg3 />
-      <FloatingHeader scrollTitle="Curriculum vitae" />
+      <FloatingHeader scrollTitle="Tech Stack" />
       <div className="content-wrapper">
         <div className="content">
-          <PageTitle title="Curriculum vitae" />
-          <p>My journey started in <strong>1998</strong> and it's still on going. I'm excited on where I will be in 10 years!</p>
+          <PageTitle title="Tech Stack" />
+          <p>
+            In the following I am presenting you my Tech Stack which I all learned by videos and courses on the internet as well what I learned on the job.<br></br>
+            Youtube, Udemy and ChatGPT are your best friends when it comes to learning new skills.<br></br>I'm working hard everyday to further expand my skills.{' '}
+          </p>
           <div className="flex flex-col items-stretch gap-12">
-            {cvhistory.map((item, itemIndex) => (
-              <div key={`data_${itemIndex}`} className="flex flex-col items-baseline gap-6 md:flex-row md:gap-12">
+            {stacks.map((item, itemIndex) => (
+              <div key={`data_${itemIndex}`} className="flex flex-col items-baseline gap-4">
                 <div className="flex items-center">
-                  <h2>{item.year}</h2>
+                  <h2>{item.stack}</h2>
                   <hr className="my-0 ml-4 flex-1 border-dashed border-gray-200" />
                 </div>
                 <section>
@@ -31,10 +34,10 @@ export default async function CV() {
                         </div>
                       )}
                       <div className="z-0 flex size-6 shrink-0 items-center justify-center rounded-full bg-black align-middle text-white">
-                        <PlusIcon size={16} />
+                        {item.type === 'frameworks' ? <Code2 size={16} /> : <Database size={16} />}
                       </div>
                       <div className="grow pl-8">
-                        <JourneyCard {...log} index={logIndex} />
+                        <JourneyCard {...log} index={logIndex} href={log.href} />
                       </div>
                     </div>
                   ))}
