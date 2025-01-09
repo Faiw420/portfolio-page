@@ -1,5 +1,24 @@
 export const stacks = [
     {
+        stack: 'Power BI',
+        type: 'frameworks',
+        logs: [
+            {
+                title: 'Power BI DAX and M-Language',
+                description: 'Using it for data analysis, data visualization and business intelligence in my current job. I have experience in creating complex DAX and M-Language queries to create custom reports and dashboards.',
+                href: 'https://www.microsoft.com/en-en/power-platform/products/power-bi',
+                experienceLevel: 'Advanced',
+                image: {
+                    url: '/assets/powerbi.png',
+                    width: 500,
+                    height: 500,
+                    title: 'Power BI Logo',
+                    description: 'Power BI Logo'
+                }
+            }
+        ]
+    },
+    {
         stack: 'Python',
         type: 'frameworks',
         logs: [
@@ -8,6 +27,13 @@ export const stacks = [
                 description: 'Used for web scraping, automating tasks and data science in past projects.',
                 href: 'https://www.python.org/',
                 experienceLevel: 'Advanced',
+                image: {
+                    url: '/assets/python.jpg',
+                    width: 500,
+                    height: 500,
+                    title: 'Python Logo',
+                    description: 'Python Logo'
+                }
             }
         ]
     },
