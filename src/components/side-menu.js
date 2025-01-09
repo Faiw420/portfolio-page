@@ -9,6 +9,8 @@ const keyCodePathnameMapping = {
   Digit1: '/',
   Digit2: '/journey',
   Digit3: '/techstack',
+  Digit4: '/about-you',
+  Digit5: '/stats',
 }
 
 export const SideMenu = ({ children, title = [], isInner }) => {
