@@ -4,12 +4,14 @@ import { ScrollArea } from '@/components/scroll-area'
 import { ScreenLoadingSpinner } from '@/components/screen-loading-spinner'
 import { FloatingHeader } from '@/components/floating-header'
 import { PageTitle } from '@/components/page-title'
+import { GradientBg2 } from '@/components/gradient-bg'
 
 
 export default async function Home() {
 
   return (
     <ScrollArea useScrollAreaId>
+      <GradientBg2 />
       <FloatingHeader scrollTitle="Tim Darmstädter"/>
       <div className="content-wrapper">
         <div className="content">
