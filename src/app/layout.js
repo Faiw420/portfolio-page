@@ -13,6 +13,9 @@ import { preloadGetAllPosts } from '@/lib/contentful'
 import { PROFILES } from '@/lib/constants'
 import { sharedMetadata } from '@/app/shared-metadata'
 
+const GA_MEASUREMENT_ID = 'G-M0R8KS9WP3';
+
+
 export default async function RootLayout({ children }) {
   const { isEnabled } = draftMode()
   preloadGetAllPosts(isEnabled)
@@ -20,6 +23,20 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`} suppressHydrationWarning>
       <body suppressHydrationWarning>
+        <Script
+            src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+            strategy="afterInteractive"
+          />
+          <Script id="google-analytics" strategy="afterInteractive">
+            {`
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', '${GA_MEASUREMENT_ID}', {
+                page_path: window.location.pathname,
+              });
+            `}
+          </Script>
         {/* eslint-disable-next-line react/no-unknown-property */}
         <main vaul-drawer-wrapper="" className="min-h-screen bg-white">
           {isEnabled && (
