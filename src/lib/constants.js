@@ -76,19 +76,19 @@ export const LINKS = [
   },
   {
     href: '/techstack',
-    label: 'techstack',
+    label: 'Techstack',
     icon: <LaptopIcon size={16} />
   },
-  {
-    href: '/about-you',
-    label: 'About you',
-    icon: <TargetIcon size={16} />
-  },
-  {
-    href: '/stats',
-    label: 'Stats',
-    icon: <BarChartIcon size={16} />
-  },
+  // {
+  //   href: '/about-you',
+  //   label: 'About you',
+  //   icon: <TargetIcon size={16} />
+  // },
+  // {
+  //   href: '/stats',
+  //   label: 'Stats',
+  //   icon: <BarChartIcon size={16} />
+  // },
 ]
 
 
