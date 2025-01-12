@@ -16,7 +16,7 @@ export default async function Home() {
       <div className="content-wrapper">
         <div className="content">
           <PageTitle title="Welcome! Nice to see you." className="lg:hidden" />
-          <p>
+          <p className = "text-2xl font-semibold">
             Hi 👋 I'm Tim.
           </p>
           <img 
