@@ -15,7 +15,7 @@ export default async function Home() {
       <FloatingHeader scrollTitle="Tim Darmstädter"/>
       <div className="content-wrapper">
         <div className="content">
-          <PageTitle title="Home" className="lg:hidden" />
+          <PageTitle title="Welcome! Nice to see you." className="lg:hidden" />
           <p>
             Hi 👋 I'm Tim.
           </p>
