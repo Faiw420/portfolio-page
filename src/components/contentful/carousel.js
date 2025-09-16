@@ -51,8 +51,8 @@ export function CarouselCmp({ images = [] }) {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious className="-left-2.5 bg-white @4xl/writing:-left-12" />
-        <CarouselNext className="-right-2.5 bg-white @4xl/writing:-right-12" />
+        <CarouselPrevious className="-left-2.5 bg-white dark:bg-gray-900 @4xl/writing:-left-12" />
+        <CarouselNext className="-right-2.5 bg-white dark:bg-gray-900 @4xl/writing:-right-12" />
       </Carousel>
       <div className="py-2 text-center text-xs font-light text-gray-500">{currentCaption}</div>
     </>

@@ -20,7 +20,7 @@
 
   html,
   body {
-    @apply bg-white;
+    @apply bg-white dark:bg-gray-950;
   }
 
   html {
@@ -31,7 +31,7 @@
   }
 
   body {
-    @apply font-sans text-base text-gray-900;
+    @apply font-sans text-base text-gray-900 dark:text-gray-100;
   }
 
   #__next {
@@ -67,7 +67,7 @@
   h1,
   h2,
   h3 {
-    @apply scroll-mt-16 font-semibold slashed-zero tracking-tighter text-black lg:scroll-mt-8;
+    @apply scroll-mt-16 font-semibold slashed-zero tracking-tighter text-gray-900 dark:text-gray-100 lg:scroll-mt-8;
   }
 
   h1 {
@@ -114,16 +114,16 @@
   }
 
   hr {
-    @apply my-6 border-gray-200;
+    @apply my-6 border-gray-200 dark:border-gray-800;
   }
 
   img,
   object {
-    @apply rounded-xl border;
+    @apply rounded-xl border border-gray-200 dark:border-gray-800;
   }
 
   pre {
-    @apply bg-white px-0 py-5 text-[13px];
+    @apply bg-white dark:bg-gray-900 px-0 py-5 text-[13px];
 
     code {
       @apply grid whitespace-pre break-normal text-left font-mono text-[13px];
@@ -148,7 +148,7 @@
 
 @layer components {
   .link-card {
-    @apply -mx-1.5 -my-1 rounded bg-transparent px-1.5 py-1 transition-colors duration-300 hover:bg-gray-200;
+    @apply -mx-1.5 -my-1 rounded bg-transparent px-1.5 py-1 transition-colors duration-300 hover:bg-gray-200 dark:hover:bg-gray-800;
   }
 
   .content-wrapper {
@@ -160,11 +160,11 @@
   }
 
   .link {
-    @apply text-blue-600 hover:underline hover:underline-offset-4;
+    @apply text-blue-600 hover:underline hover:underline-offset-4 dark:text-blue-400;
   }
 
   .inline-code {
-    @apply inline-block rounded-md bg-gray-100 px-0.5 py-0.5 text-sm not-italic before:content-['`'] after:content-['`'];
+    @apply inline-block rounded-md bg-gray-100 dark:bg-gray-800 px-0.5 py-0.5 text-sm not-italic before:content-['`'] after:content-['`'];
   }
 
   .thumbnail-shadow {
@@ -197,10 +197,10 @@
   }
 
   .bg-dots {
-    @apply bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px];
+    @apply bg-white dark:bg-gray-950 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] dark:bg-[radial-gradient(#1f2937_1px,transparent_1px)] [background-size:16px_16px];
   }
 
   .bg-grid {
-    @apply bg-white bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px];
+    @apply bg-white dark:bg-gray-950 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#ffffff12_1px,transparent_1px),linear-gradient(to_bottom,#ffffff12_1px,transparent_1px)] bg-[size:24px_24px];
   }
 }

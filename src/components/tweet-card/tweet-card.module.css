@@ -12,6 +12,15 @@
   --tweet-bg-color-hover: #fff;
 }
 
+@media (prefers-color-scheme: dark) {
+  .tweetCard :global(.react-tweet-theme) {
+    --tweet-font-color: #e5e7eb;
+    --tweet-font-color-secondary: #9ca3af;
+    --tweet-bg-color: #0b0b0b;
+    --tweet-bg-color-hover: #111827;
+  }
+}
+
 .tweetCard :global(.react-tweet-theme) [class^='tweet-container_article__'] {
   @apply p-4;
 }

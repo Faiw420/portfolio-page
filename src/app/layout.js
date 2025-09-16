@@ -4,6 +4,7 @@ import Script from 'next/script'
 import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
 import { SpeedInsights } from '@vercel/speed-insights/next'
+import { Analytics } from '@vercel/analytics/react'
 import { EyeIcon } from 'lucide-react'
 
 import { TailwindIndicator } from '@/components/tailwind-indicator'
@@ -23,6 +24,17 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`} suppressHydrationWarning>
       <body suppressHydrationWarning>
+        {/* Set initial theme ASAP to avoid flash */}
+        <Script id="theme-init" strategy="beforeInteractive">
+          {`
+            try {
+              const stored = localStorage.getItem('theme');
+              const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+              const isDark = stored === 'dark' || (!stored && prefersDark);
+              if (isDark) document.documentElement.classList.add('dark');
+            } catch (_) {}
+          `}
+        </Script>
         <Script
             src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
             strategy="afterInteractive"
@@ -38,7 +50,7 @@ export default async function RootLayout({ children }) {
             `}
           </Script>
         {/* eslint-disable-next-line react/no-unknown-property */}
-        <main vaul-drawer-wrapper="" className="min-h-screen bg-white">
+        <main vaul-drawer-wrapper="" className="min-h-screen bg-white dark:bg-gray-950">
           {isEnabled && (
             <div className="absolute inset-x-0 bottom-0 z-50 flex h-12 w-full items-center justify-center bg-green-500 text-center text-sm font-medium text-white">
               <div className="flex items-center gap-2">
@@ -56,6 +68,7 @@ export default async function RootLayout({ children }) {
         </main>
         <TailwindIndicator />
         <SpeedInsights />
+        <Analytics />
         <Script
           src="https://unpkg.com/@tinybirdco/flock.js"
           data-host="https://api.tinybird.co"
@@ -105,8 +118,8 @@ export const metadata = {
 }
 
 export const viewport = {
-  themeColor: 'white',
-  colorScheme: 'only light',
+  themeColor: [{ media: '(prefers-color-scheme: light)', color: 'white' }, { media: '(prefers-color-scheme: dark)', color: '#0a0a0a' }],
+  colorScheme: 'light dark',
   width: 'device-width',
   initialScale: 1
 }

@@ -18,7 +18,7 @@ export function CodeBlock({ title, code }) {
 
   return (
     <>
-      <div className="flex flex-wrap items-center justify-between gap-2 rounded-t-lg border border-gray-200 bg-gray-50 px-4 py-2">
+      <div className="flex flex-wrap items-center justify-between gap-2 rounded-t-lg border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900 px-4 py-2">
         <div className="flex items-center gap-3">
           <span className="inline-flex items-center gap-1">
             <span className="size-4 rounded-full bg-gray-200" />
@@ -80,7 +80,7 @@ export function CodeBlock({ title, code }) {
         </Button>
       </div>
       <div className="overflow-x-auto">
-        <div className="flex size-full flex-col overflow-x-auto overflow-y-hidden rounded-b-lg border-x border-b border-gray-200">
+        <div className="flex size-full flex-col overflow-x-auto overflow-y-hidden rounded-b-lg border-x border-b border-gray-200 dark:border-gray-800">
           <div className="horizontal-scroll-area">
             <pre>
               <code dangerouslySetInnerHTML={{ __html: codeHTML }} />

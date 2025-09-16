@@ -1,6 +1,7 @@
 import Link from 'next/link'
 
 import { NavigationLink } from '@/components/navigation-link'
+import { ThemeToggle } from '@/components/theme-toggle.jsx'
 import { PROFILES, LINKS } from '@/lib/constants'
 
 export const MenuContent = () => (
@@ -22,6 +23,17 @@ export const MenuContent = () => (
           <span className="text-gray-600">Data Analyst</span>
         </div>
       </Link>
+      <div className="flex items-center justify-between rounded-md px-2 py-1 transition-colors hover:bg-gray-200 dark:hover:bg-gray-800">
+        <div className="flex flex-col">
+          <span className="text-xs font-semibold text-gray-700 dark:text-gray-200">
+            Theme
+          </span>
+          <span className="text-[11px] uppercase tracking-wide text-gray-500 dark:text-gray-400">
+            Light / Dark
+          </span>
+        </div>
+        <ThemeToggle className="ml-2 shrink-0" />
+      </div>
       <div className="flex flex-col gap-1">
         {LINKS.map((link, linkIndex) => (
           <NavigationLink

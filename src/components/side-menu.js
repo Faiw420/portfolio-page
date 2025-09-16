@@ -27,18 +27,18 @@ export const SideMenu = ({ children, title = [], isInner }) => {
   return (
     <ScrollArea
       className={cn(
-        'hidden bg-zinc-50 lg:flex lg:flex-col lg:border-r',
+        'hidden bg-zinc-50 dark:bg-zinc-900 lg:flex lg:flex-col lg:border-r dark:lg:border-gray-800',
         isInner ? 'lg:w-80 xl:w-96' : 'lg:w-60 xl:w-72'
       )}
     >
       {title && (
-        <div className="sticky top-0 z-10 border-b bg-zinc-50 px-5 py-3">
+        <div className="sticky top-0 z-10 border-b bg-zinc-50 dark:bg-zinc-900 dark:border-gray-800 px-5 py-3">
           <div className="flex items-center justify-between">
             <span className="text-sm font-semibold tracking-tight">{title}</span>
           </div>
         </div>
       )}
-      <div className="bg-zinc-50 p-3">{children}</div>
+      <div className="bg-zinc-50 dark:bg-zinc-900 p-3">{children}</div>
     </ScrollArea>
   )
 }

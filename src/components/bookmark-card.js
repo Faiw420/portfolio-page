@@ -14,7 +14,7 @@ export const BookmarkCard = ({ bookmark, order }) => {
   return (
     <a
       key={bookmark._id}
-      className="thumbnail-shadow flex aspect-auto min-w-0 cursor-pointer flex-col gap-4 overflow-hidden rounded-xl bg-white p-4 transition-colors duration-300 hover:bg-gray-100"
+      className="thumbnail-shadow flex aspect-auto min-w-0 cursor-pointer flex-col gap-4 overflow-hidden rounded-xl bg-white dark:bg-gray-900 p-4 transition-colors duration-300 hover:bg-gray-100 dark:hover:bg-gray-800"
       href={`${bookmark.link}?ref=onur.dev`}
       target="_blank"
       rel="noopener noreferrer"

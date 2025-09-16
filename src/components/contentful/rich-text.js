@@ -1,3 +1,5 @@
+'use client'
+
 import dynamic from 'next/dynamic'
 import { BLOCKS, INLINES, MARKS } from '@contentful/rich-text-types'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
@@ -19,7 +21,7 @@ function options(links) {
 
   return {
     renderMark: {
-      [MARKS.BOLD]: (text) => <span className="font-semibold text-black">{text}</span>,
+      [MARKS.BOLD]: (text) => <span className="font-semibold text-black dark:text-gray-100">{text}</span>,
       [MARKS.ITALIC]: (text) => <span className="italic">{text}</span>,
       [MARKS.CODE]: (text) => <code className="inline-code">{text}</code>
     },
@@ -62,7 +64,7 @@ function options(links) {
       ),
       [BLOCKS.LIST_ITEM]: (_, children) => <li>{children}</li>,
       [BLOCKS.QUOTE]: (_, children) => (
-        <blockquote className="mb-4 rounded-r-lg border-l-2 border-gray-200 px-4 font-medium text-gray-500">
+        <blockquote className="mb-4 rounded-r-lg border-l-2 border-gray-200 dark:border-gray-800 px-4 font-medium text-gray-500 dark:text-gray-400">
           {children}
         </blockquote>
       ),

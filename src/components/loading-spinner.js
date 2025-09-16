@@ -1,6 +1,6 @@
 export const LoadingSpinner = () => (
   <div
-    className="inline-block size-4 animate-spin rounded-full border-2 border-current border-t-transparent text-black"
+    className="inline-block size-4 animate-spin rounded-full border-2 border-current border-t-transparent text-black dark:text-gray-100"
     role="status"
     aria-label="loading"
   >
