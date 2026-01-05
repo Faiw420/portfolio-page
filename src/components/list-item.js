@@ -11,7 +11,6 @@ export const ListItem = ({ title, description, path }) => {
 
   return (
     <Link
-      key={path}
       href={path}
       className={cn(
         'flex flex-col gap-1 rounded-lg p-2 transition-colors duration-300 [&>*]:transition-colors [&>*]:duration-300',

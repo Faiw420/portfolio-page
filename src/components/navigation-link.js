@@ -47,7 +47,7 @@ export const NavigationLink = memo(({ href, label, icon, shortcutNumber }) => {
     >
       <span className="flex items-center gap-2">
         {iconCmp}
-        <span className={cn('font-medium', isActive && 'text-white')}>{label}</span>
+        <span className="font-medium">{label}</span>
       </span>
       {shortcutNumber && (
         <span

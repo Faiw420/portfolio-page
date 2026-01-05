@@ -1,28 +1,37 @@
 'use client'
 
+import { useCallback } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
+
 import { ScrollArea } from '@/components/scroll-area'
 import { useKeyPress } from '@/hooks/useKeyPress'
 import { cn } from '@/lib/utils'
+import { toggleThemePreference } from '@/lib/theme'
+import { KEYBOARD_SHORTCUTS, THEME_TOGGLE_KEY } from '@/lib/constants'
 
-const keyCodePathnameMapping = {
-  Digit1: '/',
-  Digit2: '/journey',
-  Digit3: '/techstack',
-  Digit4: '/about-you',
-  Digit5: '/stats',
-}
+const shortcutKeys = Object.keys(KEYBOARD_SHORTCUTS)
+const handledKeys = [...shortcutKeys, THEME_TOGGLE_KEY]
 
-export const SideMenu = ({ children, title = [], isInner }) => {
+export const SideMenu = ({ children, title, isInner }) => {
   const router = useRouter()
   const pathname = usePathname()
-  useKeyPress(onKeyPress, Object.keys(keyCodePathnameMapping))
 
-  function onKeyPress(event) {
-    const key = event.code
-    const targetPathname = keyCodePathnameMapping[key]
-    if (targetPathname && targetPathname !== pathname) router.push(targetPathname)
-  }
+  const onKeyPress = useCallback(
+    (event) => {
+      const key = event.code
+      if (key === THEME_TOGGLE_KEY) {
+        toggleThemePreference()
+        return
+      }
+      const targetPathname = KEYBOARD_SHORTCUTS[key]
+      if (targetPathname && targetPathname !== pathname) {
+        router.push(targetPathname)
+      }
+    },
+    [pathname, router]
+  )
+
+  useKeyPress(onKeyPress, handledKeys)
 
   return (
     <ScrollArea
@@ -32,13 +41,14 @@ export const SideMenu = ({ children, title = [], isInner }) => {
       )}
     >
       {title && (
-        <div className="sticky top-0 z-10 border-b bg-zinc-50 dark:bg-zinc-900 dark:border-gray-800 px-5 py-3">
+        <div className="sticky top-0 z-10 border-b border-transparent bg-zinc-50 px-5 py-3 dark:border-gray-800 dark:bg-zinc-900">
           <div className="flex items-center justify-between">
             <span className="text-sm font-semibold tracking-tight">{title}</span>
           </div>
         </div>
       )}
-      <div className="bg-zinc-50 dark:bg-zinc-900 p-3">{children}</div>
+      <div className="bg-zinc-50 p-3 dark:bg-zinc-900">{children}</div>
     </ScrollArea>
   )
 }
+

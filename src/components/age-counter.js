@@ -1,16 +1,17 @@
 'use client'
-import { useEffect, useState, useMemo } from 'react';
+
+import { useEffect, useState, useMemo } from 'react'
 
 const calculateAge = (birthDate) => {
-  const now = new Date();
-  const diffInMs = now.getTime() - birthDate.getTime();
+  const now = new Date()
+  const diffInMs = now.getTime() - birthDate.getTime()
 
-  const seconds = Math.floor(diffInMs / 1000);
-  const minutes = Math.floor(seconds / 60);
-  const hours = Math.floor(minutes / 60);
-  const days = Math.floor(hours / 24);
-  const years = Math.floor(days / 365.25);
-  const months = Math.floor((days % 365.25) / 30.44);
+  const seconds = Math.floor(diffInMs / 1000)
+  const minutes = Math.floor(seconds / 60)
+  const hours = Math.floor(minutes / 60)
+  const days = Math.floor(hours / 24)
+  const years = Math.floor(days / 365.25)
+  const months = Math.floor((days % 365.25) / 30.44)
 
   return {
     years,
@@ -18,41 +19,41 @@ const calculateAge = (birthDate) => {
     days: Math.floor(days % 30.44),
     hours: hours % 24,
     minutes: minutes % 60,
-    seconds: seconds % 60,
-  };
-};
+    seconds: seconds % 60
+  }
+}
 
 const AgeCounter = () => {
-  // Replace this date with your birthdate
-  const birthDate = useMemo(() => new Date('1998-09-21'), []); // Example birthdate: January 1, 1990
-  const [age, setAge] = useState(calculateAge(birthDate));
+  const birthDate = useMemo(() => new Date('1998-09-21'), [])
+  const [age, setAge] = useState(calculateAge(birthDate))
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setAge(calculateAge(birthDate));
-    }, 1000);
-    return () => clearInterval(interval);
-  }, [birthDate]);
+      setAge(calculateAge(birthDate))
+    }, 1000)
+    return () => clearInterval(interval)
+  }, [birthDate])
 
   return (
-    <div className="mx-auto max-w-md rounded-md bg-gray-800 p-4 text-white shadow-md">
-      <h2 className="mb-4 text-center text-xl font-semibold">Your Age</h2>
-      <div className="grid grid-cols-2 gap-4 text-lg font-medium">
-        <div className="text-right">Years:</div>
-        <div>{age.years}</div>
-        <div className="text-right">Months:</div>
-        <div>{age.months}</div>
-        <div className="text-right">Days:</div>
-        <div>{age.days}</div>
-        <div className="text-right">Hours:</div>
-        <div>{age.hours}</div>
-        <div className="text-right">Minutes:</div>
-        <div>{age.minutes}</div>
-        <div className="text-right">Seconds:</div>
-        <div>{age.seconds}</div>
+    <div className="mx-auto max-w-md rounded-md border border-gray-200 bg-white p-4 text-gray-900 shadow-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-100">
+      <h3 className="mb-4 text-center text-base font-semibold">Live age counter</h3>
+      <div className="grid grid-cols-2 gap-3 text-sm font-medium">
+        <span className="text-right text-gray-500 dark:text-gray-400">Years:</span>
+        <span>{age.years}</span>
+        <span className="text-right text-gray-500 dark:text-gray-400">Months:</span>
+        <span>{age.months}</span>
+        <span className="text-right text-gray-500 dark:text-gray-400">Days:</span>
+        <span>{age.days}</span>
+        <span className="text-right text-gray-500 dark:text-gray-400">Hours:</span>
+        <span>{age.hours}</span>
+        <span className="text-right text-gray-500 dark:text-gray-400">Minutes:</span>
+        <span>{age.minutes}</span>
+        <span className="text-right text-gray-500 dark:text-gray-400">Seconds:</span>
+        <span>{age.seconds}</span>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default AgeCounter;
+export default AgeCounter
+

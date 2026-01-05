@@ -6,9 +6,9 @@ import { Drawer, DrawerContent, DrawerTrigger } from '@/components/ui/drawer'
 
 export function MobileDrawer() {
   return (
-    <Drawer>
+    <Drawer shouldScaleBackground={false}>
       <DrawerTrigger asChild>
-        <Button variant="ghost" size="icon" title="Toggle drawer">
+        <Button variant="ghost" size="icon" title="Toggle navigation">
           <CommandIcon size={16} />
         </Button>
       </DrawerTrigger>
@@ -20,3 +20,4 @@ export function MobileDrawer() {
     </Drawer>
   )
 }
+
