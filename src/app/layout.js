@@ -36,6 +36,11 @@ export default function RootLayout({ children }) {
         <TailwindIndicator />
         <SpeedInsights />
         <Analytics />
+        <Script
+          src="https://umami.darmstaedtert.im/script.js"
+          data-website-id="89ef0e9b-c913-426f-a9c1-ecaa43773d6a"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   )
@@ -87,5 +92,4 @@ export const viewport = {
   width: "device-width",
   initialScale: 1
 }
-
 
