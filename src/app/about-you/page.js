@@ -11,7 +11,7 @@ export default function AboutPage() {
   return (
     <ScrollArea useScrollAreaId>
       <GradientBg3 />
-      <FloatingHeader scrollTitle="About" />
+      <FloatingHeader scrollTitle="About (Umami)" />
       <div className="content-wrapper">
         <div className="content space-y-10">
           <PageTitle title="About Tim" />
