@@ -11,10 +11,10 @@ export default function AboutPage() {
   return (
     <ScrollArea useScrollAreaId>
       <GradientBg3 />
-      <FloatingHeader scrollTitle="About (Umami)" />
+      <FloatingHeader scrollTitle="About" />
       <div className="content-wrapper">
         <div className="content space-y-10">
-          <PageTitle title="About Tim" />
+          <PageTitle title="About Tim (Umami)" />
           <p className="max-w-2xl text-sm text-gray-600 dark:text-gray-400">{intro}</p>
 
           <section className="grid gap-4 rounded-2xl border border-gray-200 bg-white/70 p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900/60 md:grid-cols-2">
