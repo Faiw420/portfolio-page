@@ -22,7 +22,7 @@ export const journeyTimeline = [
     entries: [
       {
         title: "Student internship at Daimler AG",
-        description: "During school I interned with Reisacher GmbH, learned about the automotive sector, and how teams operate."
+        description: "During school I interned with Daimler AG, learned about the automotive sector, and how IT teams operate."
       }
     ]
   },
@@ -30,12 +30,12 @@ export const journeyTimeline = [
     year: "2017",
     entries: [
       {
-        title: "Dual studies at EWR AG in Worms, Germany",
-        description: "I joined a dual-study program for mechatronics, diving into the energy sector and teamwork."
-      },
-      {
         title: "Graduated from high school",
         description: "Completed the Abitur at the local high school and started exploring study opportunities."
+      },
+      {
+        title: "Dual studies at EWR AG in Worms, Germany",
+        description: "I joined a dual-study program for mechatronics, diving into the energy sector and teamwork."
       }
     ]
   },
@@ -58,7 +58,7 @@ export const journeyTimeline = [
       {
         title: "Joined EWR Netz GmbH as a grid controller",
         description:
-          "Managed cost optimisation and approval for electricity and gas grids with annual revenue around 150 million euros."
+          "Managed cost optimisation and approval for electricity and gas grids with annual revenue around 150 million euros. Learned alot about automated workflows and data analysis."
       }
     ]
   },
@@ -93,8 +93,8 @@ export const journeyTimeline = [
     year: "2024",
     entries: [
       {
-        title: "Started a Data Science master's at IUBH",
-        description: "Enrolled in a Data Science master's at IUBH in Bad Honnef to deepen my analytics expertise."
+        title: "Started a masters in Data Science",
+        description: "Enrolled in a Data Science master's to learn more about data science and machine learning."
       }
     ]
   }
