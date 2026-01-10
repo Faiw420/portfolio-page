@@ -4,10 +4,12 @@ import { ScrollArea } from "@/components/scroll-area"
 import { GradientBg2 } from "@/components/gradient-bg"
 import { FloatingHeader } from "@/components/floating-header"
 import { PageTitle } from "@/components/page-title"
+import { LiveVisitors } from "@/components/live-visitors"
+import AgeCounter from "@/components/age-counter"
 import { homeContent } from "@/data/home"
 
 export default function Home() {
-  const { hero, metrics, toolkit, focusAreas, wins, cta } = homeContent
+  const { hero, facts, toolkit, projects, recentProjects, cta } = homeContent
 
   return (
     <ScrollArea useScrollAreaId>
@@ -32,26 +34,27 @@ export default function Home() {
                 className="mx-auto h-auto w-32 rounded-xl border border-gray-200 shadow-lg dark:border-gray-800 md:mx-0"
               />
             </div>
-            <p className="text-sm text-gray-600 dark:text-gray-400">{hero.intro}</p>
+            <AgeCounter />
+            <LiveVisitors />
           </section>
 
           <section className="space-y-4">
-            <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400">Impact at a Glance</h2>
+            <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400">About Me</h2>
             <div className="grid gap-4 sm:grid-cols-3">
-              {metrics.map((metric) => (
+              {facts.map((fact) => (
                 <div
-                  key={metric.label}
-                  className="flex flex-col gap-1 rounded-2xl border border-dashed border-indigo-200 bg-indigo-50/60 p-4 text-indigo-900 dark:border-indigo-500/40 dark:bg-indigo-500/10 dark:text-indigo-200"
+                  key={fact.label}
+                  className="flex flex-col gap-1 rounded-2xl border border-dashed border-teal-300 bg-teal-50/70 p-4 text-teal-900 dark:border-teal-500/30 dark:bg-teal-900/20 dark:text-teal-100"
                 >
-                  <span className="text-2xl font-bold">{metric.value}</span>
-                  <span className="text-sm text-indigo-700/80 dark:text-indigo-200/70">{metric.label}</span>
+                  <span className="text-sm font-medium text-teal-600 dark:text-teal-400">{fact.label}</span>
+                  <span className="text-lg font-semibold">{fact.value}</span>
                 </div>
               ))}
             </div>
           </section>
 
           <section className="space-y-4">
-            <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400">Analytics Toolkit</h2>
+            <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400">Toolkit</h2>
             <div className="flex flex-wrap gap-2">
               {toolkit.map((tool) => (
                 <span
@@ -65,32 +68,32 @@ export default function Home() {
           </section>
 
           <section className="space-y-4">
-            <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400">Where I Drive Insight</h2>
+            <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400">Projects</h2>
             <div className="grid gap-4 md:grid-cols-3">
-              {focusAreas.map((area) => (
-                <div key={area.title} className="rounded-2xl border border-gray-200 bg-white/70 p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900/60">
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{area.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-gray-600 dark:text-gray-400">{area.description}</p>
+              {projects.map((project) => (
+                <div key={project.title} className="rounded-2xl border border-gray-200 bg-white/70 p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900/60">
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{project.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-gray-600 dark:text-gray-400">{project.description}</p>
                 </div>
               ))}
             </div>
           </section>
 
           <section className="space-y-4">
-            <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400">Recent Wins</h2>
+            <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400">Recent Projects</h2>
             <ul className="space-y-3 rounded-2xl border border-gray-200 bg-white/70 p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900/60">
-              {wins.map((win) => (
-                <li key={win} className="flex items-start gap-3 text-sm text-gray-600 dark:text-gray-400">
-                  <span className="mt-1 size-2.5 rounded-full bg-indigo-500" aria-hidden />
-                  <span>{win}</span>
+              {recentProjects.map((project) => (
+                <li key={project} className="flex items-start gap-3 text-sm text-gray-600 dark:text-gray-400">
+                  <span className="mt-1 size-2.5 rounded-full bg-teal-500" aria-hidden />
+                  <span>{project}</span>
                 </li>
               ))}
             </ul>
           </section>
 
-          <section className="space-y-3 rounded-2xl border border-indigo-200 bg-indigo-50/70 p-6 shadow-sm dark:border-indigo-500/40 dark:bg-indigo-500/10">
-            <h2 className="text-base font-semibold text-indigo-900 dark:text-indigo-200">{cta.title}</h2>
-            <p className="text-sm text-indigo-900/80 dark:text-indigo-100/80">{cta.description}</p>
+          <section className="space-y-3 rounded-2xl border border-teal-300 bg-teal-50/70 p-6 shadow-sm dark:border-teal-500/30 dark:bg-teal-900/20">
+            <h2 className="text-base font-semibold text-teal-900 dark:text-teal-100">{cta.title}</h2>
+            <p className="text-sm text-teal-700 dark:text-teal-300">{cta.description}</p>
           </section>
         </div>
       </div>

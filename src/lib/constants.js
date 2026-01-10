@@ -1,4 +1,4 @@
-import { Github, LinkedinIcon, TwitterIcon, HomeIcon, GlobeIcon, LaptopIcon, UserIcon, BarChartIcon, FlaskConicalIcon } from "lucide-react"
+import { Github, LinkedinIcon, TwitterIcon, HomeIcon, GlobeIcon, LaptopIcon, BarChartIcon } from "lucide-react"
 
 export const PROFILES = {
   twitter: {
@@ -36,19 +36,9 @@ export const LINKS = [
     icon: <LaptopIcon size={16} />
   },
   {
-    href: "/about-you",
-    label: "About",
-    icon: <UserIcon size={16} />
-  },
-  {
     href: "/stats",
     label: "Stats",
     icon: <BarChartIcon size={16} />
-  },
-  {
-    href: "/playground",
-    label: "Playground",
-    icon: <FlaskConicalIcon size={16} />
   }
 ]
 

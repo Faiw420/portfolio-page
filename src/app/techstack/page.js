@@ -1,11 +1,14 @@
-import { Database, Code2 } from "lucide-react"
-
 import { ScrollArea } from "@/components/scroll-area"
 import { FloatingHeader } from "@/components/floating-header"
 import { PageTitle } from "@/components/page-title"
 import { GradientBg3 } from "@/components/gradient-bg"
-import { JourneyCard } from "@/components/journey-card"
 import { techStack } from "@/data/techstack"
+
+const levelColors = {
+  Advanced: "bg-teal-100 text-teal-700 dark:bg-teal-900/30 dark:text-teal-300",
+  Intermediate: "bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300",
+  Beginner: "bg-gray-50 text-gray-500 dark:bg-gray-800/50 dark:text-gray-400",
+}
 
 export default function TechStackPage() {
   return (
@@ -13,37 +16,34 @@ export default function TechStackPage() {
       <GradientBg3 />
       <FloatingHeader scrollTitle="Tech Stack" />
       <div className="content-wrapper">
-        <div className="content">
+        <div className="content space-y-10">
           <PageTitle title="Tech Stack" />
-          <p>
-            Here's a snapshot of the tools and platforms I have learned through online courses, experimentation, and on-the-job practice.
-            Youtube, Udemy, and ChatGPT have all been instrumental in keeping my skills sharp.
+          <p className="text-gray-600 dark:text-gray-400">
+            Tools and technologies I work with.
           </p>
-          <div className="flex flex-col items-stretch gap-12">
-            {techStack.map((stack, stackIndex) => (
-              <div key={`stack_${stack.category}`} className="flex flex-col items-baseline gap-4">
-                <div className="flex items-center">
-                  <h2>{stack.category}</h2>
-                  <hr className="my-0 ml-4 flex-1 border-dashed border-gray-200" />
-                </div>
-                <section>
-                  {stack.entries.map((entry, entryIndex) => (
-                    <div key={`stack_${stackIndex}_entry_${entryIndex}`} className="relative flex pb-8 last:pb-0">
-                      {entryIndex !== stack.entries.length - 1 && (
-                        <div className="absolute inset-0 flex w-6 items-center justify-center">
-                          <div className="pointer-events-none h-full w-px border-l border-gray-200" />
-                        </div>
-                      )}
-                      <div className="z-0 flex size-6 shrink-0 items-center justify-center rounded-full bg-black text-white">
-                        {stack.type === "frameworks" ? <Code2 size={16} /> : <Database size={16} />}
-                      </div>
-                      <div className="grow pl-8">
-                        <JourneyCard {...entry} index={entryIndex} />
-                      </div>
+
+          <div className="space-y-8">
+            {techStack.map((category) => (
+              <section key={category.category} className="space-y-4">
+                <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400">
+                  {category.category}
+                </h2>
+                <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                  {category.items.map((item) => (
+                    <div
+                      key={item.name}
+                      className="flex items-center justify-between rounded-xl border border-gray-200 bg-white/80 px-4 py-3 shadow-sm backdrop-blur-sm dark:border-gray-800 dark:bg-gray-900/70"
+                    >
+                      <span className="font-medium text-gray-900 dark:text-gray-100">
+                        {item.name}
+                      </span>
+                      <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${levelColors[item.level]}`}>
+                        {item.level}
+                      </span>
                     </div>
                   ))}
-                </section>
-              </div>
+                </div>
+              </section>
             ))}
           </div>
         </div>

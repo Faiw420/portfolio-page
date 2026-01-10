@@ -40,14 +40,14 @@ export function LiveAgeDashboard() {
             key={tile.label}
             className={`flex flex-col items-center gap-1 rounded-xl border p-4 transition-shadow ${
               tile.accent
-                ? 'border-indigo-300 bg-indigo-50/80 dark:border-indigo-500/40 dark:bg-indigo-500/10'
+                ? 'border-teal-300 bg-teal-50/80 dark:border-teal-500/30 dark:bg-teal-900/20'
                 : 'border-gray-200 bg-white/80 dark:border-gray-800 dark:bg-gray-900/70'
             }`}
           >
             <span
               className={`text-xl font-bold tabular-nums ${
                 tile.accent
-                  ? 'text-indigo-700 dark:text-indigo-300'
+                  ? 'text-teal-700 dark:text-teal-300'
                   : tile.live
                     ? 'text-emerald-600 dark:text-emerald-400'
                     : 'text-gray-900 dark:text-gray-100'
