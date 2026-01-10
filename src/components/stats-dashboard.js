@@ -112,9 +112,9 @@ export function StatsDashboard({ initialData }) {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-2">
-            <span className="relative flex h-3 w-3">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex h-3 w-3 rounded-full bg-emerald-500" />
+            <span className="relative flex size-3">
+              <span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex size-3 rounded-full bg-emerald-500" />
             </span>
             <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
               {data?.activeVisitors ?? 0} online now
@@ -166,7 +166,7 @@ export function StatsDashboard({ initialData }) {
               {data.topPages.map((page, index) => (
                 <li key={page.path} className="flex items-center justify-between gap-3">
                   <div className="flex items-center gap-2 overflow-hidden">
-                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded bg-gray-100 text-xs font-medium text-gray-500 dark:bg-gray-800 dark:text-gray-400">
+                    <span className="flex size-5 shrink-0 items-center justify-center rounded bg-gray-100 text-xs font-medium text-gray-500 dark:bg-gray-800 dark:text-gray-400">
                       {index + 1}
                     </span>
                     <span className="truncate text-sm text-gray-700 dark:text-gray-300">
@@ -245,7 +245,7 @@ export function StatsDashboard({ initialData }) {
                 <ul className="space-y-2">
                   {data.devices.map((device) => (
                     <li key={device.device} className="flex items-center justify-between gap-2">
-                      <span className="text-sm text-gray-700 dark:text-gray-300 capitalize">
+                      <span className="text-sm capitalize text-gray-700 dark:text-gray-300">
                         {device.device || 'Unknown'}
                       </span>
                       <span className="text-sm font-medium tabular-nums text-gray-900 dark:text-gray-100">

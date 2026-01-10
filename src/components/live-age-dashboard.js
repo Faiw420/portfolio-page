@@ -1,7 +1,30 @@
 'use client'
 
 import { useEffect, useState, useMemo } from 'react'
-import { calculateAgeMetrics, BIRTHDATE } from '@/data/playground'
+
+const BIRTHDATE = new Date('1998-09-21T00:00:00')
+
+function calculateAgeMetrics(birthdate) {
+  const now = new Date()
+  const diff = now - birthdate
+
+  const years = now.getFullYear() - birthdate.getFullYear()
+  const months = years * 12 + (now.getMonth() - birthdate.getMonth())
+  const weeks = Math.floor(diff / (1000 * 60 * 60 * 24 * 7))
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24))
+  const hours = Math.floor(diff / (1000 * 60 * 60))
+  const seconds = Math.floor(diff / 1000)
+
+  // Calculate days until next birthday
+  const nextBirthday = new Date(now.getFullYear(), birthdate.getMonth(), birthdate.getDate())
+  if (nextBirthday <= now) {
+    nextBirthday.setFullYear(nextBirthday.getFullYear() + 1)
+  }
+  const daysUntilBirthday = Math.ceil((nextBirthday - now) / (1000 * 60 * 60 * 24))
+  const nextBirthdayAge = nextBirthday.getFullYear() - birthdate.getFullYear()
+
+  return { years, months, weeks, days, hours, seconds, daysUntilBirthday, nextBirthdayAge }
+}
 
 export function LiveAgeDashboard() {
   const [metrics, setMetrics] = useState(() => calculateAgeMetrics(BIRTHDATE))

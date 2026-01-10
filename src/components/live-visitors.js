@@ -40,9 +40,9 @@ export function LiveVisitors({ initialCount = 0, className = '' }) {
 
   return (
     <div className={`inline-flex items-center gap-2 ${className}`}>
-      <span className="relative flex h-2 w-2">
-        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-        <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+      <span className="relative flex size-2">
+        <span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+        <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
       </span>
       <span className="text-xs font-medium text-gray-600 dark:text-gray-400">
         {isLoading ? (
