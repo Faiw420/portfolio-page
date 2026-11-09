@@ -1,0 +1,30 @@
+---
+// "n online now" badge, polled from the Umami proxy endpoint. Hidden if the API is unavailable.
+---
+
+<span data-live-visitors hidden class="inline-flex items-center gap-2 font-mono text-xs text-muted">
+  <span class="relative flex size-2" aria-hidden="true">
+    <span class="absolute inline-flex size-full animate-ping rounded-full bg-live opacity-60"></span>
+    <span class="relative inline-flex size-2 rounded-full bg-live"></span>
+  </span>
+  <span><span class="num text-fg" data-count>0</span> online now</span>
+</span>
+
+<script>
+  const el = document.querySelector<HTMLElement>('[data-live-visitors]')
+  if (el) {
+    const update = async () => {
+      try {
+        const res = await fetch('/api/stats/active')
+        if (!res.ok) throw new Error()
+        const { active } = await res.json()
+        el.querySelector('[data-count]')!.textContent = String(Math.max(1, active ?? 0))
+        el.hidden = false
+      } catch {
+        el.hidden = true
+      }
+    }
+    update()
+    setInterval(update, 45_000)
+  }
+</script>

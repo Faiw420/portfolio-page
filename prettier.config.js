@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   printWidth: 120,
   tabWidth: 2,
   useTabs: false,
@@ -6,8 +6,6 @@ module.exports = {
   singleQuote: true,
   trailingComma: 'none',
   bracketSpacing: true,
-  jsxBracketSameLine: false,
-  proseWrap: 'always',
-  plugins: ['prettier-plugin-tailwindcss'],
-  tailwindFunctions: ['cn', 'cva']
+  plugins: ['prettier-plugin-astro', 'prettier-plugin-tailwindcss'],
+  overrides: [{ files: '*.astro', options: { parser: 'astro' } }]
 }

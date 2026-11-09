@@ -1,0 +1,147 @@
+---
+import '@/styles/global.css'
+import Menu from '@lucide/astro/icons/menu'
+import X from '@lucide/astro/icons/x'
+
+import MenuContent from '@/components/MenuContent.astro'
+import { SITE, NAV_LINKS } from '@/lib/site'
+
+interface Props {
+  title?: string
+  description?: string
+}
+
+const { title, description = SITE.description } = Astro.props
+const fullTitle = title ? `${title} – ${SITE.title}` : `${SITE.title} – ${SITE.role}`
+// No trailing slash, matching the sitemap and how the Worker serves pages
+const canonicalPath = Astro.url.pathname.length > 1 ? Astro.url.pathname.replace(/\/$/, '') : '/'
+const canonical = Astro.site ? new URL(canonicalPath, Astro.site) : undefined
+const ogImage = Astro.site ? new URL(SITE.ogImage, Astro.site) : undefined
+const current = NAV_LINKS.find((l) => l.href !== '/' && Astro.url.pathname.startsWith(l.href))
+const mobileTitle = title ?? current?.label ?? SITE.title
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    {canonical && <link rel="canonical" href={canonical} />}
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fcfcfb" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#111110" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    {canonical && <meta property="og:url" content={canonical} />}
+    {ogImage && <meta property="og:image" content={ogImage} />}
+    {ogImage && <meta property="og:image:width" content="1200" />}
+    {ogImage && <meta property="og:image:height" content="630" />}
+    <meta property="og:image:alt" content="Tim Darmstaedter – Data Analyst" />
+    <meta name="twitter:card" content="summary_large_image" />
+    {Astro.site && <link rel="sitemap" href="/sitemap-index.xml" />}
+
+    <script is:inline>
+      try {
+        const stored = localStorage.getItem('theme')
+        const dark = stored ? stored === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches
+        document.documentElement.classList.toggle('dark', dark)
+      } catch (_) {}
+    </script>
+    <script is:inline defer src={SITE.umami.src} data-website-id={SITE.umami.websiteId}></script>
+  </head>
+  <body>
+    <a
+      href="#content"
+      class="sr-only z-50 rounded-md bg-fg px-3 py-2 text-sm text-bg focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
+      >Skip to content</a
+    >
+
+    <div class="lg:flex">
+      <!-- Desktop sidebar -->
+      <aside
+        class="sticky top-0 hidden h-dvh w-60 shrink-0 overflow-y-auto border-r border-line bg-bg px-3 py-5 lg:flex xl:w-64"
+      >
+        <MenuContent />
+      </aside>
+
+      <!-- Mobile header -->
+      <header
+        class="sticky top-0 z-20 flex h-12 items-center gap-2 border-b border-line bg-bg/90 px-2 backdrop-blur lg:hidden"
+      >
+        <button
+          type="button"
+          data-menu-open
+          class="grid size-10 place-content-center rounded-md text-muted hover:bg-subtle hover:text-fg"
+          aria-label="Open navigation"
+          aria-controls="mobile-menu"
+        >
+          <Menu size={18} aria-hidden="true" />
+        </button>
+        <span class="text-sm font-medium">{mobileTitle}</span>
+      </header>
+
+      <dialog
+        id="mobile-menu"
+        aria-label="Navigation"
+        class="m-0 mt-auto max-h-[85dvh] w-full max-w-none rounded-t-2xl border-t border-line bg-bg p-4 text-fg backdrop:bg-black/40 lg:hidden"
+      >
+        <div class="mb-2 flex justify-end">
+          <button
+            type="button"
+            data-menu-close
+            class="grid size-10 place-content-center rounded-md text-muted hover:bg-subtle hover:text-fg"
+            aria-label="Close navigation"
+          >
+            <X size={18} aria-hidden="true" />
+          </button>
+        </div>
+        <MenuContent />
+      </dialog>
+
+      <main id="content" class="min-w-0 flex-1">
+        <slot />
+      </main>
+    </div>
+
+    <script>
+      import { NAV_LINKS, THEME_TOGGLE_KEY } from '@/lib/site'
+
+      const setTheme = (dark: boolean) => {
+        document.documentElement.classList.toggle('dark', dark)
+        try {
+          localStorage.setItem('theme', dark ? 'dark' : 'light')
+        } catch (_) {}
+        window.dispatchEvent(new CustomEvent('themechange', { detail: { dark } }))
+      }
+      const toggleTheme = () => setTheme(!document.documentElement.classList.contains('dark'))
+
+      document.querySelectorAll('[data-theme-toggle]').forEach((btn) => btn.addEventListener('click', toggleTheme))
+
+      // Keyboard shortcuts: 1…n → pages, 0 → theme
+      const shortcuts = Object.fromEntries(NAV_LINKS.map((link, i) => [`Digit${i + 1}`, link.href]))
+      const interactive = new Set(['INPUT', 'TEXTAREA', 'SELECT'])
+
+      window.addEventListener('keydown', (event) => {
+        if (event.shiftKey || event.ctrlKey || event.metaKey || event.altKey || event.repeat) return
+        const target = event.target as HTMLElement | null
+        if (target && (target.isContentEditable || interactive.has(target.tagName))) return
+
+        if (event.code === THEME_TOGGLE_KEY) return toggleTheme()
+        const href = shortcuts[event.code]
+        if (href && href !== location.pathname) location.assign(href)
+      })
+
+      // Mobile menu
+      const dialog = document.getElementById('mobile-menu') as HTMLDialogElement
+      document.querySelector('[data-menu-open]')?.addEventListener('click', () => dialog.showModal())
+      document.querySelector('[data-menu-close]')?.addEventListener('click', () => dialog.close())
+      dialog.addEventListener('click', (e) => {
+        if (e.target === dialog) dialog.close()
+      })
+    </script>
+  </body>
+</html>

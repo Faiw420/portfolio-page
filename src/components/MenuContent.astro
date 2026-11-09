@@ -1,0 +1,104 @@
+---
+import House from '@lucide/astro/icons/house'
+import Briefcase from '@lucide/astro/icons/briefcase'
+import Route from '@lucide/astro/icons/route'
+import Layers from '@lucide/astro/icons/layers'
+import ChartLine from '@lucide/astro/icons/chart-line'
+import Moon from '@lucide/astro/icons/moon'
+import Sun from '@lucide/astro/icons/sun'
+import ArrowUpRight from '@lucide/astro/icons/arrow-up-right'
+
+import BrandIcon from '@/components/BrandIcon.astro'
+import { NAV_LINKS, PROFILES, SITE, THEME_TOGGLE_KEY, isActive } from '@/lib/site'
+
+const icons = { house: House, briefcase: Briefcase, route: Route, layers: Layers, 'chart-line': ChartLine }
+const pathname = Astro.url.pathname
+const themeKey = THEME_TOGGLE_KEY.replace('Digit', '')
+const item =
+  'group flex min-h-10 items-center justify-between gap-2 rounded-md px-2.5 text-sm transition-colors duration-150'
+---
+
+<div class="flex w-full flex-col gap-6 text-sm">
+  <a href="/" class="flex items-center gap-3 rounded-md p-1.5 transition-colors duration-150 hover:bg-subtle">
+    <img
+      src="/assets/me.jpeg"
+      alt=""
+      width="40"
+      height="40"
+      class="size-10 rounded-full object-cover ring-1 ring-line"
+    />
+    <span class="flex flex-col leading-tight">
+      <span class="font-medium text-fg">{SITE.title}</span>
+      <span class="text-faint">{SITE.role}</span>
+    </span>
+  </a>
+
+  <nav aria-label="Main">
+    <ul class="flex flex-col gap-0.5">
+      {
+        NAV_LINKS.map((link, i) => {
+          const Icon = icons[link.icon]
+          const active = isActive(pathname, link.href)
+          return (
+            <li>
+              <a
+                href={link.href}
+                aria-current={active ? 'page' : undefined}
+                aria-keyshortcuts={String(i + 1)}
+                class:list={[item, active ? 'bg-subtle font-medium text-fg' : 'text-muted hover:bg-subtle hover:text-fg']}
+              >
+                <span class="flex items-center gap-2.5">
+                  <Icon size={16} class={active ? 'text-accent' : 'text-faint group-hover:text-fg'} aria-hidden="true" />
+                  {link.label}
+                </span>
+                <kbd class="kbd hidden lg:inline-grid">{i + 1}</kbd>
+              </a>
+            </li>
+          )
+        })
+      }
+    </ul>
+  </nav>
+
+  <button
+    type="button"
+    data-theme-toggle
+    aria-keyshortcuts={themeKey}
+    class:list={[item, 'w-full text-muted hover:bg-subtle hover:text-fg']}
+  >
+    <span class="flex items-center gap-2.5">
+      <Moon size={16} class="text-faint dark:hidden" aria-hidden="true" />
+      <Sun size={16} class="hidden text-faint dark:block" aria-hidden="true" />
+      <span class="dark:hidden">Dark mode</span>
+      <span class="hidden dark:inline">Light mode</span>
+    </span>
+    <kbd class="kbd hidden lg:inline-grid">{themeKey}</kbd>
+  </button>
+
+  <div class="flex flex-col gap-1.5 border-t border-line pt-5">
+    <span class="eyebrow px-2.5 pb-1">Elsewhere</span>
+    <ul class="flex flex-col gap-0.5">
+      {
+        PROFILES.map((profile) => (
+          <li>
+            <a
+              href={profile.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class:list={[item, 'text-muted hover:bg-subtle hover:text-fg']}
+            >
+              <span class="flex items-center gap-2.5">
+                <span class="text-faint group-hover:text-fg">
+                  <BrandIcon name={profile.icon} />
+                </span>
+                {profile.title}
+                <span class="sr-only">(opens in a new tab)</span>
+              </span>
+              <ArrowUpRight size={14} class="text-faint" aria-hidden="true" />
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</div>

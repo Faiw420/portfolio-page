@@ -4,7 +4,7 @@ export const journeyTimeline = [
     entries: [
       {
         title: "pip install Tim",
-        description: "I was born in a small town near Mannheim in Germany on 21 September 1998."
+        description: "I was born in a small town near Mannheim, Germany."
       }
     ]
   },
@@ -58,7 +58,7 @@ export const journeyTimeline = [
       {
         title: "Joined EWR Netz GmbH as a grid controller",
         description:
-          "Managed cost optimisation and approval for electricity and gas grids with annual revenue around 150 million euros. Learned alot about automated workflows and data analysis."
+          "Managed cost optimisation and approval for electricity and gas grids with annual revenue around 150 million euros. Learned a lot about automated workflows and data analysis."
       }
     ]
   },
@@ -78,14 +78,7 @@ export const journeyTimeline = [
       {
         title: "Essity Health & Medical — Data Analyst",
         description:
-          "Deliver data to 300+ sales representatives across Germany, Austria, and Switzerland using Power BI.",
-        image: {
-          url: "/assets/report.jpg",
-          width: 600,
-          height: 600,
-          title: "Power BI Report",
-          description: "Example of a Power BI dashboard"
-        }
+          "Deliver data to 300+ sales representatives across Germany, Austria, and Switzerland using Power BI."
       }
     ]
   },
@@ -93,8 +86,17 @@ export const journeyTimeline = [
     year: "2024",
     entries: [
       {
-        title: "Started a masters in Data Science",
-        description: "Enrolled in a Data Science master's to learn more about data science and machine learning."
+        title: "Started a master's in Data Science",
+        description: "Enrolled in a Data Science master's to go deeper into statistics and machine learning."
+      }
+    ]
+  },
+  {
+    year: "2026",
+    entries: [
+      {
+        title: "M.Sc. Data Science – graduated with 1.3",
+        description: "Finished my master's in August 2026 with a final grade of 1.3."
       }
     ]
   }

@@ -1,0 +1,109 @@
+---
+// "Uptime" – my age as a live system monitor. Values are filled in client-side.
+import { SITE } from '@/lib/site'
+
+const units = ['Months', 'Weeks', 'Days', 'Hours', 'Seconds']
+---
+
+<section aria-labelledby="uptime-title" class="rounded-xl border border-line bg-surface" data-uptime={SITE.birthdate}>
+  <div class="flex flex-wrap items-center justify-between gap-2 border-b border-line px-4 py-3">
+    <h2 id="uptime-title" class="flex items-center gap-2 font-mono text-xs text-muted">
+      <span class="relative flex size-2" aria-hidden="true">
+        <span class="absolute inline-flex size-full animate-ping rounded-full bg-live opacity-60"></span>
+        <span class="relative inline-flex size-2 rounded-full bg-live"></span>
+      </span>
+      $ uptime
+    </h2>
+    <span class="font-mono text-xs text-faint">tim.service · running</span>
+  </div>
+
+  <div class="px-4 pt-5 pb-4">
+    <p class="mb-1 font-mono text-xs text-faint">Up for</p>
+    <p class="num text-3xl font-medium tracking-tight text-fg sm:text-4xl" data-u="headline">––y ––d ––:––:––</p>
+  </div>
+
+  <dl class="grid grid-cols-2 border-t border-line sm:grid-cols-5">
+    {
+      units.map((unit, i) => (
+        <div
+          class:list={[
+            'px-4 py-3',
+            i > 0 && 'sm:border-l sm:border-line',
+            i % 2 === 1 && 'border-l border-line sm:border-l',
+            i > 1 && 'border-t border-line sm:border-t-0'
+          ]}
+        >
+          <dt class="font-mono text-[11px] text-faint">{unit}</dt>
+          <dd class="num text-sm text-fg" data-u={unit.toLowerCase()}>
+            –
+          </dd>
+        </div>
+      ))
+    }
+  </dl>
+
+  <div class="border-t border-line px-4 py-3">
+    <div class="mb-2 flex items-baseline justify-between gap-3 font-mono text-xs">
+      <span class="text-muted">Next release <span class="text-fg" data-u="version">v––.0</span></span>
+      <span class="text-faint"><span class="num" data-u="countdown">–</span> days to go</span>
+    </div>
+    <div
+      class="h-1.5 overflow-hidden rounded-full bg-subtle"
+      role="progressbar"
+      aria-label="Progress to next birthday"
+      aria-valuemin="0"
+      aria-valuemax="100"
+      data-u="progress-wrap"
+    >
+      <div class="h-full rounded-full bg-accent transition-[width] duration-500" style="width:0%" data-u="progress">
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const DAY = 86_400_000
+  const fmt = new Intl.NumberFormat('en-US')
+  const pad = (n: number) => String(n).padStart(2, '0')
+
+  document.querySelectorAll<HTMLElement>('[data-uptime]').forEach((root) => {
+    const birth = new Date(root.dataset.uptime!)
+    const q = (k: string) => root.querySelector<HTMLElement>(`[data-u="${k}"]`)!
+
+    const tick = () => {
+      const now = new Date()
+      const diff = now.getTime() - birth.getTime()
+
+      let years = now.getFullYear() - birth.getFullYear()
+      const thisYearBirthday = new Date(now.getFullYear(), birth.getMonth(), birth.getDate())
+      if (now < thisYearBirthday) years--
+      const lastBirthday = new Date(birth.getFullYear() + years, birth.getMonth(), birth.getDate())
+      const nextBirthday = new Date(birth.getFullYear() + years + 1, birth.getMonth(), birth.getDate())
+      const sinceLast = now.getTime() - lastBirthday.getTime()
+      const daysSince = Math.floor(sinceLast / DAY)
+      const rest = sinceLast % DAY
+
+      q('headline').textContent = `${years}y ${daysSince}d ${pad(Math.floor(rest / 3_600_000))}:${pad(
+        Math.floor((rest / 60_000) % 60)
+      )}:${pad(Math.floor((rest / 1000) % 60))}`
+
+      let months = (now.getFullYear() - birth.getFullYear()) * 12 + now.getMonth() - birth.getMonth()
+      if (now.getDate() < birth.getDate()) months--
+      q('months').textContent = fmt.format(months)
+      q('weeks').textContent = fmt.format(Math.floor(diff / (7 * DAY)))
+      q('days').textContent = fmt.format(Math.floor(diff / DAY))
+      q('hours').textContent = fmt.format(Math.floor(diff / 3_600_000))
+      q('seconds').textContent = fmt.format(Math.floor(diff / 1000))
+
+      const total = nextBirthday.getTime() - lastBirthday.getTime()
+      const pct = Math.round((sinceLast / total) * 1000) / 10
+      q('version').textContent = `v${years + 1}.0`
+      q('countdown').textContent = String(Math.ceil((nextBirthday.getTime() - now.getTime()) / DAY))
+      q('progress').style.width = `${pct}%`
+      q('progress-wrap').setAttribute('aria-valuenow', String(pct))
+    }
+
+    tick()
+    setInterval(tick, 1000)
+  })
+</script>

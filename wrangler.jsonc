@@ -1,0 +1,15 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "portfolio-page",
+  "compatibility_date": "2026-11-01",
+  // Attaches the domain to this Worker on deploy (the zone must be active on Cloudflare first)
+  "routes": [{ "pattern": "darmstaedtert.im", "custom_domain": true }],
+  "assets": {
+    "not_found_handling": "404-page",
+    // Serve /work from work/index.html without redirecting to /work/
+    "html_handling": "drop-trailing-slash"
+  },
+  "observability": {
+    "enabled": true
+  }
+}

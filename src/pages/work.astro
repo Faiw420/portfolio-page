@@ -1,0 +1,91 @@
+---
+import ArrowUpRight from '@lucide/astro/icons/arrow-up-right'
+import ChevronDown from '@lucide/astro/icons/chevron-down'
+
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import PageHeader from '@/components/PageHeader.astro'
+import { work, WORK_CATEGORIES } from '@/data/work'
+
+const groups = WORK_CATEGORIES.map((c) => ({ ...c, items: work.filter((w) => w.category === c.id) })).filter(
+  (g) => g.items.length > 0
+)
+---
+
+<BaseLayout title="Work" description="Selected work by Tim Darmstaedter: Power BI reporting, grid controlling and self-hosted side projects.">
+  <div class="page">
+    <PageHeader eyebrow="02 / Work" title="Things I've built and run">
+      From sales reporting for a whole sales organisation to a Raspberry Pi in the living room.
+    </PageHeader>
+
+    <div class="space-y-10">
+      {
+        groups.map((group) => (
+          <details class="group/work" open={group.id === 'professional'} data-work-group>
+            <summary class="section-title mb-0 cursor-pointer list-none rounded-sm transition-colors duration-150 hover:text-accent [&::-webkit-details-marker]:hidden">
+              <h2 id={`group-${group.id}`}>{group.label}</h2>
+              <ChevronDown
+                size={16}
+                class="text-faint transition-transform duration-200 group-open/work:rotate-180"
+                aria-hidden="true"
+              />
+            </summary>
+          <ol class="divide-y divide-line">
+            {
+              group.items.map((item) => (
+                <li id={item.slug} class="grid scroll-mt-16 gap-3 py-8 sm:grid-cols-[9rem_1fr] sm:gap-8">
+                  <div class="space-y-1">
+                    <p class="eyebrow">{item.period}</p>
+                    <p class="text-sm text-muted">{item.org}</p>
+                  </div>
+                  <div>
+                    <h3 class="text-lg font-medium">
+                      {item.href ? (
+                        <a href={item.href} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 hover:text-accent">
+                          {item.title}
+                          <ArrowUpRight size={15} aria-hidden="true" />
+                          <span class="sr-only">(opens in a new tab)</span>
+                        </a>
+                      ) : (
+                        item.title
+                      )}
+                    </h3>
+                    <p class="mt-2 text-muted">{item.summary}</p>
+                    {item.points.length > 0 && (
+                      <ul class="mt-4 space-y-1.5 text-sm text-muted">
+                        {item.points.map((p) => (
+                          <li class="flex gap-3">
+                            <span class="mt-2.5 h-px w-3 shrink-0 bg-line-strong" aria-hidden="true" />
+                            {p}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                    <ul class="mt-4 flex flex-wrap gap-1.5" aria-label="Tools used">
+                      {item.stack.map((s) => <li class="tag">{s}</li>)}
+                    </ul>
+                  </div>
+                </li>
+              ))
+            }
+          </ol>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  // Open the collapsed group that contains a deep-linked entry (e.g. /work#homelab from Home)
+  const openTarget = () => {
+    const id = decodeURIComponent(location.hash.slice(1))
+    const target = id && document.getElementById(id)
+    const group = target?.closest<HTMLDetailsElement>('details[data-work-group]')
+    if (group && !group.open) {
+      group.open = true
+      target!.scrollIntoView()
+    }
+  }
+  openTarget()
+  window.addEventListener('hashchange', openTarget)
+</script>

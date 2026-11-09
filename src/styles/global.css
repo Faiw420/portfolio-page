@@ -1,0 +1,141 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/geist';
+@import '@fontsource-variable/geist-mono';
+
+/* Class-based dark mode, toggled by the theme switch / key "0" */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ---------- Design tokens ---------- */
+:root {
+  --bg: #fcfcfb;
+  --surface: #ffffff;
+  --subtle: #f4f4f2;
+  --fg: #18181b;
+  --muted: #52525b;
+  --faint: #71717a;
+  --line: #e7e7e4;
+  --line-strong: #d4d4d0;
+  --accent: #2563eb;
+  --accent-soft: #eff4ff;
+  --chart: #2563eb;
+  --live: #059669;
+  --danger: #dc2626;
+  color-scheme: light;
+}
+
+.dark {
+  --bg: #111110;
+  --surface: #1a1a19;
+  --subtle: #222221;
+  --fg: #f4f4f5;
+  --muted: #a1a1aa;
+  --faint: #8b8b93;
+  --line: #2a2a28;
+  --line-strong: #3a3a37;
+  --accent: #60a5fa;
+  --accent-soft: #172033;
+  --chart: #3b82f6;
+  --live: #34d399;
+  --danger: #f87171;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --font-sans: 'Geist Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'Geist Mono Variable', ui-monospace, SFMono-Regular, monospace;
+
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-subtle: var(--subtle);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-chart: var(--chart);
+  --color-live: var(--live);
+  --color-danger: var(--danger);
+}
+
+@theme {
+  --breakpoint-xs: 390px;
+}
+
+/* ---------- Base ---------- */
+@layer base {
+  html {
+    @apply bg-bg text-fg antialiased;
+    text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply min-h-dvh bg-bg font-sans text-base leading-relaxed;
+    font-feature-settings: 'ss01', 'cv11';
+  }
+
+  ::selection {
+    @apply bg-accent text-white;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply text-fg text-balance;
+    letter-spacing: -0.02em;
+  }
+
+  a,
+  button,
+  [role='button'] {
+    @apply cursor-pointer;
+  }
+
+  :focus-visible {
+    @apply rounded-sm outline-2 outline-offset-2 outline-accent;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* ---------- Components ---------- */
+@layer components {
+  .page {
+    @apply mx-auto w-full max-w-3xl px-4 pt-8 pb-20 sm:px-6 lg:px-10 lg:pt-20;
+  }
+
+  .eyebrow {
+    @apply font-mono text-xs text-faint;
+  }
+
+  .section-title {
+    @apply mb-5 flex items-baseline justify-between gap-4 border-b border-line pb-3 text-sm font-medium text-fg;
+  }
+
+  .kbd {
+    @apply inline-grid h-5 min-w-5 place-content-center rounded border border-line bg-surface px-1 font-mono text-[11px] leading-none text-faint;
+  }
+
+  .text-link {
+    @apply text-fg underline decoration-line-strong underline-offset-4 transition-colors duration-150 hover:decoration-accent;
+  }
+
+  .tag {
+    @apply inline-flex items-center rounded-md border border-line px-1.5 py-0.5 font-mono text-[11px] text-muted;
+  }
+
+  .num {
+    @apply font-mono tabular-nums slashed-zero;
+  }
+}

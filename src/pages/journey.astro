@@ -1,0 +1,62 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import PageHeader from '@/components/PageHeader.astro'
+import { journeyTimeline } from '@/data/journey'
+
+const isCommand = (title: string) => /^(pip|npm|git) /.test(title)
+---
+
+<BaseLayout title="Journey" description="Milestones in Tim Darmstaedter's life and career, from 1998 until today.">
+  <div class="page">
+    <PageHeader eyebrow="03 / Journey" title="Curriculum vitae">
+      My journey started in <strong class="font-medium text-fg">1998</strong> and it is still going. Here are the
+      milestones so far.
+    </PageHeader>
+
+    <ol class="relative">
+      {
+        journeyTimeline.map((item) => (
+          <li class="grid gap-2 sm:grid-cols-[5rem_1fr] sm:gap-6">
+            <h2 class="num pt-px text-sm font-medium text-faint sm:sticky sm:top-6 sm:self-start">{item.year}</h2>
+            <ol class="border-l border-line pb-10 pl-6">
+              {item.entries.map((entry) => (
+                <li class="relative pb-8 last:pb-0">
+                  <span
+                    class="absolute top-2 -left-[1.6875rem] size-[7px] rounded-full bg-bg ring-2 ring-line-strong"
+                    aria-hidden="true"
+                  />
+                  <h3 class:list={['font-medium', isCommand(entry.title) && 'font-mono text-[0.95rem] text-accent']}>
+                    {isCommand(entry.title) && <span class="text-faint">$ </span>}
+                    {entry.href ? (
+                      <a href={entry.href} target="_blank" rel="noopener noreferrer" class="text-link">
+                        {entry.title}
+                      </a>
+                    ) : (
+                      entry.title
+                    )}
+                  </h3>
+                  {entry.description && <p class="mt-1.5 text-sm text-muted">{entry.description}</p>}
+                  {entry.image?.url && (
+                    <img
+                      src={entry.image.url}
+                      alt={entry.image.description || entry.image.title}
+                      width={entry.image.width}
+                      height={entry.image.height}
+                      loading="lazy"
+                      decoding="async"
+                      class="mt-4 aspect-[3/2] w-full max-w-md rounded-lg object-cover ring-1 ring-line"
+                    />
+                  )}
+                </li>
+              ))}
+            </ol>
+          </li>
+        ))
+      }
+      <li class="grid sm:grid-cols-[5rem_1fr] sm:gap-6">
+        <span></span>
+        <p class="pl-6 font-mono text-xs text-faint">… to be continued</p>
+      </li>
+    </ol>
+  </div>
+</BaseLayout>

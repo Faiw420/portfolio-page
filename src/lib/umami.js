@@ -1,7 +1,14 @@
-const UMAMI_API_URL = process.env.UMAMI_API_URL
-const UMAMI_WEBSITE_ID = process.env.UMAMI_WEBSITE_ID
-const UMAMI_USERNAME = process.env.UMAMI_USERNAME
-const UMAMI_PASSWORD = process.env.UMAMI_PASSWORD
+// Server-only (runs in the Cloudflare Worker).
+// Secrets come from `wrangler secret put …` in production and `.dev.vars` locally.
+import { env } from 'cloudflare:workers'
+
+const UMAMI_API_URL = env.UMAMI_API_URL
+const UMAMI_WEBSITE_ID = env.UMAMI_WEBSITE_ID
+const UMAMI_USERNAME = env.UMAMI_USERNAME
+const UMAMI_PASSWORD = env.UMAMI_PASSWORD
+
+// Edge cache for Umami responses (seconds). Active visitors change faster than aggregates.
+const CACHE_TTL = { active: 30, default: 60 }
 
 // Cache the auth token
 let cachedToken = null
@@ -39,20 +46,22 @@ async function getAuthToken() {
   return cachedToken
 }
 
-async function fetchUmami(endpoint, options = {}) {
+async function fetchUmami(endpoint) {
   const url = `${UMAMI_API_URL}/api${endpoint}`
-  
-  console.log('Fetching Umami:', url)
-  
+
+  // Cloudflare's Cache API (only active on a custom domain, a no-op on *.workers.dev).
+  // Timestamps are rounded to the minute in getTimeRange, so repeated requests share a cache key.
+  const cache = globalThis.caches?.default
+  const cacheKey = new Request(url)
+  const cached = await cache?.match(cacheKey)
+  if (cached) return cached.json()
+
   const token = await getAuthToken()
-  
   const response = await fetch(url, {
-    ...options,
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`,
-      ...options.headers,
-    },
+      Authorization: `Bearer ${token}`
+    }
   })
 
   if (!response.ok) {
@@ -61,7 +70,13 @@ async function fetchUmami(endpoint, options = {}) {
     throw new Error(`Umami API error: ${response.status} ${response.statusText}`)
   }
 
-  return response.json()
+  const body = await response.text()
+  const ttl = endpoint.endsWith('/active') ? CACHE_TTL.active : CACHE_TTL.default
+  await cache?.put(
+    cacheKey,
+    new Response(body, { headers: { 'Content-Type': 'application/json', 'Cache-Control': `public, max-age=${ttl}` } })
+  )
+  return JSON.parse(body)
 }
 
 /**
@@ -274,7 +289,8 @@ export async function getBrowsers(startAt, endAt, limit = 5) {
  * @param {string} range - '24h', '7d', '30d'
  */
 export function getTimeRange(range) {
-  const now = Date.now()
+  // Rounded to the minute so the edge cache can reuse responses
+  const now = Math.floor(Date.now() / 60_000) * 60_000
   const ranges = {
     '24h': 24 * 60 * 60 * 1000,
     '7d': 7 * 24 * 60 * 60 * 1000,
@@ -303,3 +319,25 @@ export function formatDuration(seconds) {
   const remainingMins = mins % 60
   return `${hours}h ${remainingMins}m`
 }
+
+/** Everything the overview needs for a range, fetched in parallel. */
+export async function getOverview(range = '24h') {
+  const { startAt, endAt } = getTimeRange(range)
+  const [activeVisitors, stats, topPages, referrers, countries, devices, browsers] = await Promise.all([
+    getActiveVisitors(),
+    getStats(startAt, endAt),
+    getTopPages(startAt, endAt, 5),
+    getReferrers(startAt, endAt, 5),
+    getCountries(startAt, endAt, 6),
+    getDevices(startAt, endAt),
+    getBrowsers(startAt, endAt, 5)
+  ])
+  return { activeVisitors, stats, topPages, referrers, countries, devices, browsers, range, timestamp: Date.now() }
+}
+
+export const RANGES = ['24h', '7d', '30d']
+export const json = (data, status = 200) =>
+  new Response(JSON.stringify(data), {
+    status,
+    headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' }
+  })

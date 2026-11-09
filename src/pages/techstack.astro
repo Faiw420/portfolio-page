@@ -1,0 +1,34 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import PageHeader from '@/components/PageHeader.astro'
+import { stack } from '@/data/stack'
+---
+
+<BaseLayout title="Stack" description="The tools Tim Darmstaedter uses for analytics, automation, web and self-hosting.">
+  <div class="page">
+    <PageHeader eyebrow="04 / Stack" title="Tools I work with">
+      What I use, and what I actually use it for.
+    </PageHeader>
+
+    <div class="space-y-12">
+      {
+        stack.map((group) => (
+          <section>
+            <h2 class="section-title">
+              {group.category}
+              <span class="num text-xs font-normal text-faint">{group.items.length}</span>
+            </h2>
+            <dl class="divide-y divide-line">
+              {group.items.map((item) => (
+                <div class="grid gap-0.5 py-3 sm:grid-cols-[14rem_1fr] sm:gap-6">
+                  <dt class="font-medium text-fg">{item.name}</dt>
+                  <dd class="text-sm text-muted sm:pt-0.5">{item.note}</dd>
+                </div>
+              ))}
+            </dl>
+          </section>
+        ))
+      }
+    </div>
+  </div>
+</BaseLayout>
